@@ -4,7 +4,9 @@
 - Fonctionnel pour un client unique.
 - Recharger la page pour obtenir un nouveau plateau
 
-## Installation de l'environement de développement (Linux)
+### Installation de l'environement de développement (Linux)
+
+#### API
 
 ```bash
 cd Codenames/api
@@ -15,9 +17,13 @@ pip install --upgrade setuptools
 pip install -r requirements.txt
 export FLASK_APP=codenames.py
 export FLASK_ENV=development
-cd ../ui
-yarn
 flask run
+```
+#### UI
+
+```bash
+cd Codenames/ui
+yarn
 yarn start
 ```
 
