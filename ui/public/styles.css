@@ -1,0 +1,43 @@
+.card {
+  width: 17%;
+  font-size: 50px;
+  line-height: 100px;
+  margin: 15px;
+  padding: 0;
+}
+
+.spy-blue {
+  color: blue;
+}
+
+.spy-red {
+  color: red;
+}
+
+.spy-black {
+  color: black;
+}
+
+.spy-nocolor {
+  color: tan;
+}
+
+.played-blue {
+  background-color: blue;
+  color: black;
+}
+
+.played-red {
+  background-color: red;
+  color: black;
+}
+
+.played-black {
+  background-color: black;
+  color: white;
+}
+
+.played-nocolor {
+  background-color: tan;
+  color: black;
+}
