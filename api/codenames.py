@@ -4,7 +4,7 @@ from flask_cors import CORS, logging
 
 from deck import init_deck
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/')
