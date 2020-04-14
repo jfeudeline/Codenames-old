@@ -1,4 +1,4 @@
-# Codenames
+# Codenames : https://jfeudeline-codenames.herokuapp.com/
 
 - Version en ligne du jeu Codenames en cours de développement.
 - Fonctionnel pour un client unique.
@@ -19,6 +19,7 @@ export FLASK_APP=codenames.py
 export FLASK_ENV=development
 flask run
 ```
+
 #### UI
 
 ```bash
@@ -26,5 +27,3 @@ cd Codenames/ui
 yarn
 yarn start
 ```
-
-

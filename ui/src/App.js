@@ -8,7 +8,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    get("http://localhost:5000/api").then((cards) => {
+    get("https://lit-stream-81562.herokuapp.com/api").then((cards) => {
       setLoading(false);
       setCards(cards);
     });
