@@ -1,46 +1,40 @@
-import React, { useState, useEffect } from "react";
-import BoardGame from "./components";
-import { get } from "./utils/fetch";
+import React from "react";
+import { Switch, Route, Link } from "react-router-dom";
+
+import Board from "./Board";
+import { Home } from "./home";
 
 const App = () => {
-  const [isSpymaster, setIsSpymaster] = useState(false);
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    get("https://lit-stream-81562.herokuapp.com/api").then((cards) => {
-      setLoading(false);
-      setCards(cards);
-    });
-  }, []);
-
-  const changeSpymaster = (e) => {
-    e.preventDefault();
-    setIsSpymaster(!isSpymaster);
-  };
-
-  const handleClick = (e, id) => {
-    e.preventDefault();
-    let new_cards = [...cards];
-    new_cards[id].isPlayed = true;
-    setCards(new_cards);
-  };
-
-  if (loading) return <div>Loading...</div>;
-
   return (
     <>
-      <h1>Codenames</h1>
-      <BoardGame
-        cards={cards}
-        isSpymaster={isSpymaster}
-        onClick={handleClick}
-      />
-      <div>
-        Spymaster :
-        <button onClick={changeSpymaster}>{isSpymaster ? "ON" : "OFF"}</button>
-      </div>
+      <nav>
+        <ul>
+          <li>
+            <h1>Codenames</h1>
+          </li>
+          <li>
+            <Link to="/">Accueil</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <Switch>
+        <Route path="/:gameId">
+          <Game />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
     </>
+  );
+};
+
+const Game = () => {
+  return (
+    <div>
+      <Board />
+    </div>
   );
 };
 

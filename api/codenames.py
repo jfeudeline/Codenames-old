@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from deck import init_deck
@@ -20,11 +20,30 @@ def api():
     return jsonify(ids)
 
 
-@app.route('/api/<game>')
-def game(game):
-    if game in games:
-        return jsonify(games[game])
-    return jsonify([])
+@app.route('/api/<game_id>', methods=['GET', 'POST'])
+def get_deck(game_id):
+    if game_id not in games:
+        return jsonify([])
+    if request.method == 'POST':
+        games[game_id] = request.get_json()
+    return jsonify(games[game_id])
+
+
+@app.route('/login')
+def login():
+    if request.method == 'POST':
+        return do_the_login()
+    else:
+        return show_the_login_form()
+
+
+@app.route('/api/<game_id>/new-deal')
+def new_deal(game_id):
+    if game_id not in games:
+        return jsonify([])
+    deck = init_deck()
+    games[game_id] = deck
+    return jsonify(deck)
 
 
 @app.route('/api/new-game')

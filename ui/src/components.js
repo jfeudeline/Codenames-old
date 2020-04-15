@@ -18,7 +18,7 @@ const Card = ({ card, isSpymaster, onClick }) => {
   );
 };
 
-const BoardGame = ({ cards, isSpymaster, onClick }) =>
+const Deck = ({ cards, isSpymaster, onClick }) =>
   cards.map((card) => (
     <Card
       key={card.id}
@@ -28,4 +28,4 @@ const BoardGame = ({ cards, isSpymaster, onClick }) =>
     />
   ));
 
-export default BoardGame;
+export default Deck;
