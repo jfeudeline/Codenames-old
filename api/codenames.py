@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from flask_cors import CORS, logging
+from flask_cors import CORS
 
 
 from deck import init_deck
