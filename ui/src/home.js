@@ -3,7 +3,7 @@ import { getText, get } from "./utils/fetch";
 import { useHistory } from "react-router-dom";
 
 const NewGameButton = () => {
-  const [gameId, setGameId] = useState("");
+  //const [gameId, setGameId] = useState("");
   const [loading, setLoading] = useState(true);
   const [nGames, setNGames] = useState(0);
   let history = useHistory();
@@ -15,7 +15,7 @@ const NewGameButton = () => {
   const handleClick = (e) => {
     //get("https://lit-stream-81562.herokuapp.com/api").then((cards) => {
     getText("http://localhost:5000/api/new-game").then((id) => {
-      setGameId(id);
+      //setGameId(id);
       setNGames(nGames + 1);
       history.push(`/${id}`);
     });
@@ -55,7 +55,7 @@ const AllGamesList = () => {
   }
 
   return(
-    <div class="all-games">
+    <div className="all-games">
       <h3>Toutes les parties disponibles :</h3>
       <ul>
         {games.map(id => <li><button onClick={() => handleClick(id)}>{id}</button></li>)}
