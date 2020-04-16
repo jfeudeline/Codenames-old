@@ -16,13 +16,13 @@ const Board = () => {
   useEffect(() => {
     post(apiUrl, cards);
     setBlockUpdate(true);
-    setTimeout(setBlockUpdate(false), 3000);
+    setTimeout(setBlockUpdate(false), 5000);
   }, [cards, apiUrl]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setSynchro((synchro) => !synchro);
-    }, 500);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
