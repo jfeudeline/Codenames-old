@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from deck import init_deck
-from games import games, generate_game_id
+cards = init_deck()
 
 
 app = Flask(__name__)
@@ -14,41 +14,16 @@ def index():
     return "Bienvenue sur Codenames."
 
 
-@app.route('/api')
-def api():
-    ids = [id for id in games]
-    return jsonify(ids)
-
-
-@app.route('/api/<game_id>', methods=['GET', 'POST'])
-def get_deck(game_id):
-    if game_id not in games:
-        return jsonify([])
+@app.route('/api', methods=['GET', 'POST'])
+def get_deck():
     if request.method == 'POST':
-        games[game_id] = request.get_json()
-    return jsonify(games[game_id])
+        global cards
+        cards = request.get_json()
+    return jsonify(cards)
 
 
-@app.route('/login')
-def login():
-    if request.method == 'POST':
-        return do_the_login()
-    else:
-        return show_the_login_form()
-
-
-@app.route('/api/<game_id>/new-deal')
-def new_deal(game_id):
-    if game_id not in games:
-        return jsonify([])
-    deck = init_deck()
-    games[game_id] = deck
-    return jsonify(deck)
-
-
-@app.route('/api/new-game')
-def new_game():
-    deck = init_deck()
-    game_id = generate_game_id()
-    games[game_id] = deck
-    return game_id
+@app.route('/api/new-deal')
+def new_deal():
+    global cards
+    cards = init_deck()
+    return jsonify(cards)

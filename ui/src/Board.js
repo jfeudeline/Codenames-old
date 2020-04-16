@@ -2,23 +2,20 @@ import React, { useState, useEffect } from "react";
 
 import Deck from "./components";
 import { get, post } from "./utils/fetch";
-import { useParams } from "react-router-dom";
 
 const Board = () => {
   const [isSpymaster, setIsSpymaster] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
-  const { gameId } = useParams();
-  //const apiUrl = `http://localhost:5000/api/${gameId}`;
-  const apiUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}`;
-  const newDealUrl = `http://localhost:5000/api/${gameId}/new-deal`;
-  const newDealUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}/new-deal`;
+
+  const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
+  const newDealUrl = `${apiUrl}/new-deal`;
 
   useEffect(() => {
     get(apiUrl).then((cards) => {
-      setLoading(false);
       setCards(cards);
+      setLoading(false);
     });
   }, [apiUrl]);
 
@@ -33,7 +30,7 @@ const Board = () => {
         setNewDeal(false);
       });
     }
-  }, [newDeal]);
+  }, [newDeal, newDealUrl]);
 
   const changeSpymaster = (e) => {
     e.preventDefault();
