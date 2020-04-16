@@ -9,25 +9,30 @@ const Board = () => {
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
   const [synchro, setSynchro] = useState(false);
+  const [blockUpdate, setBlockUpdate] = useState(false);
 
   const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setSynchro((synchro) => !synchro);
-    }, 2000);
+    }, 100);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    get(apiUrl).then((cards) => {
-      setCards(cards);
-      setLoading(false);
-    });
-  }, [apiUrl, synchro]);
+    if (!blockUpdate) {
+      get(apiUrl).then((cards) => {
+        setCards(cards);
+        setLoading(false);
+      });
+    }
+  }, [apiUrl, synchro, blockUpdate]);
 
   useEffect(() => {
+    setBlockUpdate(false);
     post(apiUrl, cards);
+    setTimeout(setBlockUpdate(true), 3000);
   }, [cards, apiUrl]);
 
   useEffect(() => {
