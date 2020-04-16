@@ -10,10 +10,10 @@ const Board = () => {
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
   const { gameId } = useParams();
-  //const apiUrl = `http://localhost:5000/api/${gameId}`;
-  const apiUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}`;
+  const apiUrl = `http://localhost:5000/api/${gameId}`;
+  //const apiUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}`;
   const newDealUrl = `http://localhost:5000/api/${gameId}/new-deal`;
-  const newDealUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}/new-deal`;
+  //const newDealUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}/new-deal`;
 
   useEffect(() => {
     get(apiUrl).then((cards) => {

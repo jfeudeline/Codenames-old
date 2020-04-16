@@ -1,8 +1,10 @@
 .card {
-  width: 17%;
-  font-size: 50px;
+  width: 8em;
+  height: 8em;
+  font-size: 10px;
   line-height: 100px;
   margin: 15px;
+  text-align: center;
   padding: 0;
 }
 

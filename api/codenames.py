@@ -51,4 +51,5 @@ def new_game():
     deck = init_deck()
     game_id = generate_game_id()
     games[game_id] = deck
+    print(f'Nouveau jeu : {game_id}')
     return game_id
