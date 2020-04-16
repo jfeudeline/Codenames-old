@@ -25,17 +25,31 @@ const NewGameButton = () => {
   return <button onClick={handleClick}>New game</button>;
 };
 
+/*
+ * Composant React permettant de récupérer la liste de toutes les parties
+ * et l'utilisateur peut rejoindre une partie en appuyant sur le bouton. 
+ */
 const AllGamesList = () => {
   const gamesUrl = "http://localhost:5000/api";
   const [games, setGames] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    get(gamesUrl).then((game) => {
-      setGames(game);
-    });
+    // Requete automatique pour mettre à jour les parties en cours (utile ?)
+    /*
+    setInterval(() => {
+      get(gamesUrl).then((games) => {
+        setGames(games);
+      })}, 1000);
+    */
+    
+    // On récupère la liste de toutes parties
+    get(gamesUrl).then((games) => {
+      setGames(games);
+   });
   }, [gamesUrl]);
-
+  
+  // Renvoi l'utilisateur vers la partie choisie
   const handleClick = (id) => {
     history.push(`/${id}`)
   }

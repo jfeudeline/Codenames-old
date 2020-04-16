@@ -16,10 +16,8 @@ const Board = () => {
   //const newDealUrl = `https://lit-stream-81562.herokuapp.com/api/${gameId}/new-deal`;
 
   useEffect(() => {
-    get(apiUrl).then((cards) => {
-      setLoading(false);
-      setCards(cards);
-    });
+    getCards();
+    setInterval(getCards, 2000); // appel la fonction toutes les 2 sec
   }, [apiUrl]);
 
   useEffect(() => {
@@ -34,6 +32,16 @@ const Board = () => {
       });
     }
   }, [newDeal]);
+
+  /*
+   * Récupère l'état des cartes de la partie
+   */
+  const getCards = () => {
+    get(apiUrl).then((cards) => {
+      setLoading(false);
+      setCards(cards);
+    });
+  }
 
   const changeSpymaster = (e) => {
     e.preventDefault();

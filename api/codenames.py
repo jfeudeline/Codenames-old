@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 
 from deck import init_deck
@@ -23,6 +23,7 @@ def api():
 @app.route('/api/<game_id>', methods=['GET', 'POST'])
 def get_deck(game_id):
     if game_id not in games:
+        abort(404, description="Resource not found") # Gestion de l'erreur 404
         return jsonify([])
     if request.method == 'POST':
         games[game_id] = request.get_json()
