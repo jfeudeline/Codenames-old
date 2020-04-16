@@ -8,16 +8,23 @@ const Board = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
+  const [synchro, setSynchro] = useState(false);
 
   const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
-  const newDealUrl = `${apiUrl}/new-deal`;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSynchro((synchro) => !synchro);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     get(apiUrl).then((cards) => {
       setCards(cards);
       setLoading(false);
     });
-  }, [apiUrl]);
+  }, [apiUrl, synchro]);
 
   useEffect(() => {
     post(apiUrl, cards);
@@ -25,12 +32,12 @@ const Board = () => {
 
   useEffect(() => {
     if (newDeal) {
-      get(newDealUrl).then((cards) => {
+      get(`${apiUrl}/new-deal`).then((cards) => {
         setCards(cards);
         setNewDeal(false);
       });
     }
-  }, [newDeal, newDealUrl]);
+  }, [newDeal, apiUrl]);
 
   const changeSpymaster = (e) => {
     e.preventDefault();
