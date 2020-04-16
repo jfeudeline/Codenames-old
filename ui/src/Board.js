@@ -14,9 +14,15 @@ const Board = () => {
   const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
 
   useEffect(() => {
+    post(apiUrl, cards);
+    setBlockUpdate(true);
+    setTimeout(setBlockUpdate(false), 3000);
+  }, [cards, apiUrl]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setSynchro((synchro) => !synchro);
-    }, 100);
+    }, 500);
     return () => clearInterval(interval);
   }, []);
 
@@ -30,15 +36,10 @@ const Board = () => {
   }, [apiUrl, synchro, blockUpdate]);
 
   useEffect(() => {
-    setBlockUpdate(false);
-    post(apiUrl, cards);
-    setTimeout(setBlockUpdate(true), 3000);
-  }, [cards, apiUrl]);
-
-  useEffect(() => {
     if (newDeal) {
       get(`${apiUrl}/new-deal`).then((cards) => {
         setCards(cards);
+        setIsSpymaster(false);
         setNewDeal(false);
       });
     }
