@@ -8,32 +8,48 @@ const Board = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
-  const [synchro, setSynchro] = useState(false);
   const [blockUpdate, setBlockUpdate] = useState(false);
+  const [countGets, setCountGets] = useState(0);
+  const [firstPostOk, SetFirstPostOk] = useState(false);
 
-  const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
-
-  useEffect(() => {
-    post(apiUrl, cards);
-    setBlockUpdate(true);
-    setTimeout(setBlockUpdate(false), 5000);
-  }, [cards, apiUrl]);
+  //const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
+  const apiUrl = `http://localhost:5000/api`;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSynchro((synchro) => !synchro);
-    }, 1000);
+      if (!blockUpdate) {
+        setCountGets((count) => count + 1);
+        console.log(`envoi get (count=${countGets})`);
+
+        get(apiUrl).then((newCards) => {
+          setCountGets((count) => count - 1);
+          console.log(`retour get (count=${countGets})`);
+
+          if (JSON.stringify(newCards) !== JSON.stringify(cards)) {
+            console.log(JSON.stringify(newCards[0]));
+            console.log(JSON.stringify(cards[0]));
+
+            console.log("Nouvelles cartes reçues!");
+            setCards(newCards);
+            setLoading(false);
+            SetFirstPostOk(true);
+          }
+        });
+      }
+    }, 200);
     return () => clearInterval(interval);
-  }, []);
+  }, [apiUrl, blockUpdate, countGets, cards]);
 
   useEffect(() => {
-    if (!blockUpdate) {
-      get(apiUrl).then((cards) => {
-        setCards(cards);
-        setLoading(false);
+    if (countGets === 0 && firstPostOk) {
+      setBlockUpdate(true);
+      console.log(`envoi post (count=${countGets})`);
+      post(apiUrl, cards).then(() => {
+        setBlockUpdate(false);
       });
+      console.log(`retour post (count=${countGets})`);
     }
-  }, [apiUrl, synchro, blockUpdate]);
+  }, [cards, apiUrl, firstPostOk]);
 
   useEffect(() => {
     if (newDeal) {
@@ -57,9 +73,11 @@ const Board = () => {
 
   const handleClick = (e, id) => {
     e.preventDefault();
-    let new_cards = [...cards];
-    new_cards[id].isPlayed = true;
-    setCards(new_cards);
+    if (!cards[id].isPlayed) {
+      let new_cards = [...cards];
+      new_cards[id].isPlayed = true;
+      setCards(new_cards);
+    }
   };
 
   if (loading) return <div>cards Loading...</div>;
