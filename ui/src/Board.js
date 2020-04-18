@@ -13,11 +13,11 @@ const Board = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  //  console.log("Component update");
+  console.log("Component update");
 
   useEffect(() => {
     socket.on("update", (cards) => {
-      console.log(cards);
+      console.log("update cards");
       setCards(cards);
       setLoading(false);
     });
@@ -44,6 +44,11 @@ const Board = () => {
   const handleClick = (e, id) => {
     e.preventDefault();
     if (!cards[id].isPlayed) {
+      let newCards = [...cards];
+      newCards[id].isPlayed = true;
+      setCards(cards);
+      console.log("clic");
+
       socket.emit("choose word", id);
     }
   };
