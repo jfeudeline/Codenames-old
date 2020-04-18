@@ -1,65 +1,51 @@
 import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 
 import Deck from "./components";
-import { get, post } from "./utils/fetch";
+import { get } from "./utils/fetch";
+
+//const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
+const apiUrl = `http://localhost:5000`;
+const socket = socketIOClient(apiUrl);
 
 const Board = () => {
   const [isSpymaster, setIsSpymaster] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newDeal, setNewDeal] = useState(false);
-  const [blockUpdate, setBlockUpdate] = useState(false);
-  const [countGets, setCountGets] = useState(0);
-  const [firstPostOk, SetFirstPostOk] = useState(false);
-
-  //const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
-  const apiUrl = `http://localhost:5000/api`;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!blockUpdate) {
-        setCountGets((count) => count + 1);
-        console.log(`envoi get (count=${countGets})`);
+    if (loading) {
+      get(`${apiUrl}/api`).then((cards) => {
+        console.log(JSON.stringify(cards[0]));
+        setCards(cards);
 
-        get(apiUrl).then((newCards) => {
-          setCountGets((count) => count - 1);
-          console.log(`retour get (count=${countGets})`);
-
-          if (JSON.stringify(newCards) !== JSON.stringify(cards)) {
-            console.log(JSON.stringify(newCards[0]));
-            console.log(JSON.stringify(cards[0]));
-
-            console.log("Nouvelles cartes reçues!");
+        socket.on("message", (newCards) => {
+          const isChange = JSON.stringify(newCards) !== JSON.stringify(cards);
+          console.log(JSON.stringify(newCards));
+          console.log(JSON.stringify(cards));
+          console.log(isChange);
+          if (isChange) {
             setCards(newCards);
-            setLoading(false);
-            SetFirstPostOk(true);
           }
         });
-      }
-    }, 200);
-    return () => clearInterval(interval);
-  }, [apiUrl, blockUpdate, countGets, cards]);
 
-  useEffect(() => {
-    if (countGets === 0 && firstPostOk) {
-      setBlockUpdate(true);
-      console.log(`envoi post (count=${countGets})`);
-      post(apiUrl, cards).then(() => {
-        setBlockUpdate(false);
+        setLoading(false);
       });
-      console.log(`retour post (count=${countGets})`);
+    } else {
+      socket.emit("message", cards);
     }
-  }, [cards, apiUrl, firstPostOk]);
+  }, [cards]);
 
   useEffect(() => {
     if (newDeal) {
-      get(`${apiUrl}/new-deal`).then((cards) => {
+      get(`${apiUrl}/api/new-deal`).then((cards) => {
         setCards(cards);
         setIsSpymaster(false);
         setNewDeal(false);
       });
     }
-  }, [newDeal, apiUrl]);
+  }, [newDeal]);
 
   const changeSpymaster = (e) => {
     e.preventDefault();

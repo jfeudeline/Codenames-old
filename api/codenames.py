@@ -1,20 +1,21 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from flask_socketio import SocketIO
+import eventlet
 
 
 from deck import init_deck
 cards = init_deck()
 
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+app = Flask(__name__, template_folder='./templates')
+CORS(app)
 
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def sessions():
     return render_template('session.html')
 
@@ -23,10 +24,13 @@ def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
 
-@socketio.on('my event')
+@socketio.on('message')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('my response', json, callback=messageReceived)
+    global cards
+    print('card clicked !')
+
+    cards = json
+    socketio.emit('message', cards, callback=messageReceived)
 
 
 @app.route('/api', methods=['GET', 'POST'])
@@ -45,4 +49,4 @@ def new_deal():
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True)
