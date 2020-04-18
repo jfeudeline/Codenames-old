@@ -12,41 +12,41 @@ app = Flask(__name__, template_folder='./templates')
 CORS(app)
 
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, cors_allowed_origins='*')
+socket = SocketIO(app, cors_allowed_origins='*')
 
 
-@app.route('/', methods=['GET', 'POST'])
-def sessions():
-    return render_template('session.html')
+@app.route('/')
+def index():
+    return 'Bienvenue sur Codenames'
 
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+@socket.on('connect')
+def handle_connect():
+    print('new client connected !')
+    socket.emit('connect', 'Bienvenue sur Codenames !')
+    socket.emit('update', cards)
 
 
-@socketio.on('message')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    global cards
-    print('card clicked !')
-
-    cards = json
-    socketio.emit('message', cards, callback=messageReceived)
-
-
-@app.route('/api', methods=['GET', 'POST'])
-def get_deck():
-    if request.method == 'POST':
-        global cards
-        cards = request.get_json()
-    return jsonify(cards)
-
-
-@app.route('/api/new-deal')
-def new_deal():
+@socket.on('change cards')
+def handle_change_cards():
+    print('Nouvelle donne')
     global cards
     cards = init_deck()
-    return jsonify(cards)
+    socket.emit('update', cards)
+
+
+@socket.on('choose word')
+def handle_choose_word(id):
+    global cards
+    print(f"{cards[id]['word']} clicked !")
+    cards[id]['isPlayed'] = True
+    socket.emit('update', cards)
+
+
+@socket.on('update')
+def handle_change_cards():
+    socket.emit('update', cards)
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socket.run(app, debug=True)

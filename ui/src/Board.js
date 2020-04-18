@@ -1,51 +1,35 @@
 import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
+
+import io from "socket.io-client";
 
 import Deck from "./components";
-import { get } from "./utils/fetch";
 
-//const apiUrl = `https://lit-stream-81562.herokuapp.com/api`;
-const apiUrl = `http://localhost:5000`;
-const socket = socketIOClient(apiUrl);
+const apiUrl = `https://lit-stream-81562.herokuapp.com`;
+//const apiUrl = `http://localhost:5000`;
+const socket = io(apiUrl);
 
 const Board = () => {
   const [isSpymaster, setIsSpymaster] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newDeal, setNewDeal] = useState(false);
+
+  //  console.log("Component update");
 
   useEffect(() => {
-    if (loading) {
-      get(`${apiUrl}/api`).then((cards) => {
-        console.log(JSON.stringify(cards[0]));
-        setCards(cards);
+    socket.on("update", (cards) => {
+      console.log(cards);
+      setCards(cards);
+      setLoading(false);
+    });
 
-        socket.on("message", (newCards) => {
-          const isChange = JSON.stringify(newCards) !== JSON.stringify(cards);
-          console.log(JSON.stringify(newCards));
-          console.log(JSON.stringify(cards));
-          console.log(isChange);
-          if (isChange) {
-            setCards(newCards);
-          }
-        });
+    socket.emit("update");
 
-        setLoading(false);
-      });
-    } else {
-      socket.emit("message", cards);
-    }
-  }, [cards]);
+    socket.on("connect", (content) =>
+      console.log(`connect to server : ${content}`)
+    );
 
-  useEffect(() => {
-    if (newDeal) {
-      get(`${apiUrl}/api/new-deal`).then((cards) => {
-        setCards(cards);
-        setIsSpymaster(false);
-        setNewDeal(false);
-      });
-    }
-  }, [newDeal]);
+    return () => socket.close();
+  }, []);
 
   const changeSpymaster = (e) => {
     e.preventDefault();
@@ -54,20 +38,17 @@ const Board = () => {
 
   const changeCards = (e) => {
     e.preventDefault();
-    setNewDeal(true);
+    socket.emit("change cards");
   };
 
   const handleClick = (e, id) => {
     e.preventDefault();
     if (!cards[id].isPlayed) {
-      let new_cards = [...cards];
-      new_cards[id].isPlayed = true;
-      setCards(new_cards);
+      socket.emit("choose word", id);
     }
   };
 
   if (loading) return <div>cards Loading...</div>;
-  if (cards === undefined) return <div>Cet URL n'existe pas</div>;
 
   return (
     <>
