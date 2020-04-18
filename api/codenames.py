@@ -8,7 +8,7 @@ from deck import init_deck
 cards = init_deck()
 
 
-app = Flask(__name__, template_folder='./templates')
+app = Flask(__name__)
 CORS(app)
 
 app.config['SECRET_KEY'] = 'secret!'

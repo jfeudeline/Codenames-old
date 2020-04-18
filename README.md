@@ -1,9 +1,9 @@
-# Codenames : 
+# Codenames :
+
 https://jfeudeline-codenames.herokuapp.com/
 
 - Version en ligne du jeu Codenames en cours de développement.
-- Fonctionnel pour un client unique.
-- Recharger la page pour obtenir un nouveau plateau
+- Le serveur ne gère qu'une unique partie multijoueur simultanée
 
 ### Installation de l'environement de développement (Linux)
 
@@ -16,9 +16,7 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install --upgrade setuptools
 pip install -r requirements.txt
-export FLASK_APP=codenames.py
-export FLASK_ENV=development
-flask run
+python codenames.py
 ```
 
 #### UI
@@ -28,3 +26,5 @@ cd Codenames/ui
 yarn
 yarn start
 ```
+
+Modifier l'URL dans Board.js pour choisir entre le serveur local ou distant.
