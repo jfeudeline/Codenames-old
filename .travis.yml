@@ -3,7 +3,8 @@ jobs:
     - language: python
       python: 3.8
       script:
-        - python -c "print('Hi from Python!')"
+        - cd api
+        - pytest
 
     - language: node_js
       node_js: 13
