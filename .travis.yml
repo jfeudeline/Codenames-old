@@ -1,3 +1,7 @@
+env:
+  global:
+    PAGES_TOKEN: fjKrz6bbvqS1P4WKJrugPsxqjsE/aYtA2ZxorFuY4+0MKGe0c6SHKUHDlwKZcAyxyovZNOiGI0aBCz/V4aZejYUVdHao8IGsCo2dsWY7s8wruS7G1DZibMlhCDN+Tpx5PvCQ7YUuzahAOi0wPn28tEXJJ8NxrgZ1i0FFsGjMrqvrUNUoZelc4sS+T/ws8hfnwhZQxvAFqgweOvze4rbp1zUQR7L3rsM4uW9L4inbLOXnQ2s2gATY6U0aKCHgtzA1pYbCy+eT0BGxRavfm1Gn1IzOYswuXDf68jIeQbX+bS2e2K/KuZcvXskMsLTxjfJy+zNdK/HTEWuNUcsjnWEn80dO0IqN//wfsxHXnNTQvdjIKm/xycDrobT6/XMSqa/nxv6JZ7elxnPVwlquTIF3KKZyRAdWBSJVuXdRxjpI33n7DgzSsMO1xo2f7pM7MYBW5MvSa9rlagwPjBh4BOSajz+H2Xj4E7qMiv7307soEfCGPsWUZiNrSmsUguCWvLX5miSse6FouJLO3ZhdvwPIEvV5zxfT482eo+tRa6a41oxjJUMapZAwOHxvrv3JPFZxKCoFj5Gtu3cDdTfjttzJDfjw+QX35Ze7gQ2JCtjWiA7cx9SFGuxMCbGhqka70Gk7gzGEL3G7veAlFGvwZZOxXcc6e2IazxbhtHAsNJedNNY=
+
 jobs:
   include:
     - language: python
@@ -6,7 +10,6 @@ jobs:
         - cd api
       script:
         - pytest
-
     - language: node_js
       node_js: 13
       before_intall:
@@ -15,5 +18,5 @@ jobs:
         - yarn test
       deploy:
         provider: pages:git
-        token: $PAGES_TOKEN
+        token: PAGES_TOKEN
         edge: true
