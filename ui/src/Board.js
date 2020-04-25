@@ -4,8 +4,8 @@ import io from "socket.io-client";
 
 import Deck from "./components";
 
-const apiUrl = `https://lit-stream-81562.herokuapp.com`;
-//const apiUrl = `http://localhost:5000`;
+//const apiUrl = `https://lit-stream-81562.herokuapp.com`;
+const apiUrl = `http://localhost:8000`;
 const socket = io(apiUrl);
 
 const Board = () => {

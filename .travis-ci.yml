@@ -1,7 +1,11 @@
-language: python
-install:
-  - cd api
-  - pip install -r requirements.txt
-script:
-  - pytest
-  - flake
+jobs:
+  include:
+    - language: python
+      python: 3.8
+      script:
+        - python -c "print('Hi from Python!')"
+
+    - language: node_js
+      node_js: 13
+      script:
+        - node -e "console.log('Hi from NodeJS!')"
