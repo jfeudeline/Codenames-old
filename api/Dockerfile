@@ -13,4 +13,4 @@ COPY . .
 
 
 EXPOSE 8000
-CMD [ "gunicorn", "--bind=0.0.0.0", "--workers=2",  "codenames:app" ]
+CMD [ "gunicorn", "--bind=0.0.0.0", "--workers=1", "--worker-class=eventlet", "codenames:app" ]

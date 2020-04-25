@@ -13,3 +13,5 @@ jobs:
         - cd ui
       script:
         - yarn test
+      deploy:
+        - yarn deploy

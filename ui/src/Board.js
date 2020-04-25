@@ -4,16 +4,12 @@ import io from "socket.io-client";
 
 import Deck from "./components";
 
-//const apiUrl = `https://lit-stream-81562.herokuapp.com`;
-const apiUrl = `http://localhost:8000`;
-const socket = io(apiUrl);
+const socket = io(process.env.REACT_APP_BASE_API_URL);
 
 const Board = () => {
   const [isSpymaster, setIsSpymaster] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  console.log("Component update");
 
   useEffect(() => {
     socket.on("update", (cards) => {
