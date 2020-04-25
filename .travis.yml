@@ -9,5 +9,7 @@ jobs:
 
     - language: node_js
       node_js: 13
+      before_intall:
+        - cd ui
       script:
-        - node -e "console.log('Hi from NodeJS!')"
+        - yarn test
