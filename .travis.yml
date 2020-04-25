@@ -2,8 +2,9 @@ jobs:
   include:
     - language: python
       python: 3.8
-      script:
+      before_intall:
         - cd api
+      script:
         - pytest
 
     - language: node_js
