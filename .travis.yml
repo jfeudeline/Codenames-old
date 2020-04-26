@@ -18,8 +18,6 @@ jobs:
         - cd ui
       script:
         - yarn test
-      before_install:
-        - cd ui
       deploy:
         provider: ${PROVIDER}
         api_key: ${HEROKU_API_KEY}
