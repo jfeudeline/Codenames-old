@@ -7,9 +7,9 @@ jobs:
       script:
         - pytest
       deploy:
-        provider: heroku
+        provider: ${PROVIDER}
         api_key: ${HEROKU_API_KEY}
-        app: lit-stream-81562
+        app: ${API_APP}
         on: master
 
     - language: node_js
@@ -21,8 +21,7 @@ jobs:
       before_install:
         - cd ui
       deploy:
-        provider: heroku
-        api_key:
-          secure: cjCK6oYHb0UQZCHqnraY6BtUulp2INT72imGqkUZR42WaEMe8pG6SnLQN4c9U0qiXl9erd+yOSFTTUjhcXgxh1jlRnBqbUqP5/51TeXsdDXUlKomvow+OPe0kpH0TTg6z5DAFZPEQtLouX7wyUYuRKFky/AIbrILWhKFFvb13tbBtFuWY7hNnejaZ46S4CpgINrBkmwqLzSq7dsbLesb0wL2RVHh7NjxPphQmSDa6i09dVd5sTwPxqeqsU1egXvtwbbyLdsQa+jZU8QPCwRgOgaXuU/dmbcyNPUuzZ4gfg83hsgWy/o8b14pkdJnAsV6l+tO0IMHPvugd3ZtqQO3TzAicDHTWUg7QrFN7qbjdu6Fm57ikSlsugmn+fCLKYtrTiMoVjHtajFGvv4o0TcSja5+MCMm/t9ep0uYSe+oMN4/LKHYeIDR+nVOPtkmkEWrUH6h5zSd95qKbKv8NCAYCYxuIfpirGbEHhqhunjKTRsFAQST6PJygr+WCE57LQKwHOy3/ecfWDH8Cem5EyTlHzzokR5m1tGuasJwMbSV6bpVaVCSZEL0a0rHh+8oPP86gX8g0ylX0qOBKH1wbiBE6G+oVRLAAyiAClW8BvRgoXrVFIkm6UNL+ns5MNZEERsFV07SsmxaAjEqF7XEiUM4HQjY/CatdI/nITwbqDy/KM8=
-        app: jfeudeline-codenames
+        provider: ${PROVIDER}
+        api_key: ${HEROKU_API_KEY}
+        app: ${UI_APP}
         on: master
