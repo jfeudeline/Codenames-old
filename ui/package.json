@@ -15,15 +15,12 @@
     "socket.io-client": "^2.3.0",
     "socketio": "^1.0.0"
   },
-  "homepage": "https://jfeudeline.github.io/Codenames",
   "scripts": {
     "start": "react-scripts start",
     "start-local-api": "REACT_APP_BASE_API_URL=http://localhost:5000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
