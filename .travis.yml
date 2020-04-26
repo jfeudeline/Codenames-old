@@ -1,7 +1,3 @@
-env:
-  global:
-    PAGES_TOKEN: fjKrz6bbvqS1P4WKJrugPsxqjsE/aYtA2ZxorFuY4+0MKGe0c6SHKUHDlwKZcAyxyovZNOiGI0aBCz/V4aZejYUVdHao8IGsCo2dsWY7s8wruS7G1DZibMlhCDN+Tpx5PvCQ7YUuzahAOi0wPn28tEXJJ8NxrgZ1i0FFsGjMrqvrUNUoZelc4sS+T/ws8hfnwhZQxvAFqgweOvze4rbp1zUQR7L3rsM4uW9L4inbLOXnQ2s2gATY6U0aKCHgtzA1pYbCy+eT0BGxRavfm1Gn1IzOYswuXDf68jIeQbX+bS2e2K/KuZcvXskMsLTxjfJy+zNdK/HTEWuNUcsjnWEn80dO0IqN//wfsxHXnNTQvdjIKm/xycDrobT6/XMSqa/nxv6JZ7elxnPVwlquTIF3KKZyRAdWBSJVuXdRxjpI33n7DgzSsMO1xo2f7pM7MYBW5MvSa9rlagwPjBh4BOSajz+H2Xj4E7qMiv7307soEfCGPsWUZiNrSmsUguCWvLX5miSse6FouJLO3ZhdvwPIEvV5zxfT482eo+tRa6a41oxjJUMapZAwOHxvrv3JPFZxKCoFj5Gtu3cDdTfjttzJDfjw+QX35Ze7gQ2JCtjWiA7cx9SFGuxMCbGhqka70Gk7gzGEL3G7veAlFGvwZZOxXcc6e2IazxbhtHAsNJedNNY=
-
 jobs:
   include:
     - language: python
@@ -10,6 +6,7 @@ jobs:
         - cd api
       script:
         - pytest
+
     - language: node_js
       node_js: 13
       before_intall:
@@ -17,6 +14,8 @@ jobs:
       script:
         - yarn test
       deploy:
-        provider: pages:git
-        token: PAGES_TOKEN
-        edge: true
+        provider: heroku
+        api_key:
+          secure: cjCK6oYHb0UQZCHqnraY6BtUulp2INT72imGqkUZR42WaEMe8pG6SnLQN4c9U0qiXl9erd+yOSFTTUjhcXgxh1jlRnBqbUqP5/51TeXsdDXUlKomvow+OPe0kpH0TTg6z5DAFZPEQtLouX7wyUYuRKFky/AIbrILWhKFFvb13tbBtFuWY7hNnejaZ46S4CpgINrBkmwqLzSq7dsbLesb0wL2RVHh7NjxPphQmSDa6i09dVd5sTwPxqeqsU1egXvtwbbyLdsQa+jZU8QPCwRgOgaXuU/dmbcyNPUuzZ4gfg83hsgWy/o8b14pkdJnAsV6l+tO0IMHPvugd3ZtqQO3TzAicDHTWUg7QrFN7qbjdu6Fm57ikSlsugmn+fCLKYtrTiMoVjHtajFGvv4o0TcSja5+MCMm/t9ep0uYSe+oMN4/LKHYeIDR+nVOPtkmkEWrUH6h5zSd95qKbKv8NCAYCYxuIfpirGbEHhqhunjKTRsFAQST6PJygr+WCE57LQKwHOy3/ecfWDH8Cem5EyTlHzzokR5m1tGuasJwMbSV6bpVaVCSZEL0a0rHh+8oPP86gX8g0ylX0qOBKH1wbiBE6G+oVRLAAyiAClW8BvRgoXrVFIkm6UNL+ns5MNZEERsFV07SsmxaAjEqF7XEiUM4HQjY/CatdI/nITwbqDy/KM8=
+        app: jfeudeline-codenames
+        on: master
