@@ -2,7 +2,7 @@ jobs:
   include:
     - language: python
       python: 3.8
-      before_intall:
+      before_install:
         - cd api
       script:
         - pytest
@@ -15,7 +15,7 @@ jobs:
 
     - language: node_js
       node_js: 13
-      before_intall:
+      before_install:
         - cd ui
       script:
         - yarn test
