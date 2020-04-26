@@ -19,6 +19,8 @@ jobs:
         - cd ui
       script:
         - yarn test
+      before_install:
+        - cd ui
       deploy:
         provider: heroku
         api_key:
