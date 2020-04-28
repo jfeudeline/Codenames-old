@@ -6,6 +6,8 @@ jobs:
         - cd api
       script:
         - pytest
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    && docker push jfeudeline/codenames-api
         - docker build jfeudeline/codenames-api .
         - docker push jfeudeline/codenames-api
       deploy:
@@ -20,6 +22,8 @@ jobs:
         - cd ui
       script:
         - yarn build
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    && docker push jfeudeline/codenames-api
         - docker build jfeudeline/codenames-ui .
         - docker push jfeudeline/codenames-ui
       deploy:
