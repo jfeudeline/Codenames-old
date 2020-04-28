@@ -6,6 +6,8 @@ jobs:
         - cd api
       script:
         - pytest
+        - docker build jfeudeline/codenames-api .
+        - docker push jfeudeline/codenames-api
       deploy:
         provider: ${PROVIDER}
         api_key: ${HEROKU_API_KEY}
@@ -17,7 +19,9 @@ jobs:
       before_install:
         - cd ui
       script:
-        - yarn test
+        - yarn build
+        - docker build jfeudeline/codenames-ui .
+        - docker push jfeudeline/codenames-ui
       deploy:
         provider: ${PROVIDER}
         api_key: ${HEROKU_API_KEY}
