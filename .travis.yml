@@ -7,14 +7,8 @@ jobs:
       script:
         - pytest
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    && docker push jfeudeline/codenames-api
         - docker build jfeudeline/codenames-api .
         - docker push jfeudeline/codenames-api
-      deploy:
-        provider: ${PROVIDER}
-        api_key: ${HEROKU_API_KEY}
-        app: ${API_APP}
-        on: master
 
     - language: node_js
       node_js: 13
@@ -23,11 +17,5 @@ jobs:
       script:
         - yarn build
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    && docker push jfeudeline/codenames-api
         - docker build jfeudeline/codenames-ui .
         - docker push jfeudeline/codenames-ui
-      deploy:
-        provider: ${PROVIDER}
-        api_key: ${HEROKU_API_KEY}
-        app: ${UI_APP}
-        on: master
