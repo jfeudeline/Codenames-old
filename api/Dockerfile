@@ -1,7 +1,5 @@
 FROM python:3.8.2-buster
 
-
-RUN pip install --upgrade pip
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
 
