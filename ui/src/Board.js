@@ -4,7 +4,9 @@ import io from "socket.io-client";
 
 import Deck from "./components";
 
-const socket = io(process.env.REACT_APP_BASE_API_URL);
+const url = window._env_.BASE_API_URL || process.env.REACT_APP_BASE_API_URL;
+
+const socket = io(url);
 
 const Board = () => {
   const [isSpymaster, setIsSpymaster] = useState(false);
