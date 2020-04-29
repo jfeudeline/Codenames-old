@@ -9,16 +9,12 @@ jobs:
       deploy:
         - provider: script
           skip_cleanup: true
-          script:
-            docker build -t inseefrlab/onyxia-ui:latest . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      && docker push jfeudeline/codenames-ui:latest
+          script: docker build -t jfeudeline/codenames-api:latest . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-api:latest
           on:
             branch: master
         - provider: script
           skip_cleanup: true
-          script:
-            docker build -t inseefrlab/onyxia-ui$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      && docker push jfeudeline/codenames-ui$TRAVIS_TAG
+          script: docker build -t jfeudeline/codenames-api$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-api$TRAVIS_TAG
           on:
             branch: master
 
@@ -32,15 +28,11 @@ jobs:
       deploy:
         - provider: script
           skip_cleanup: true
-          script:
-            docker build -t inseefrlab/onyxia-ui:latest . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      && docker push jfeudeline/codenames-ui:latest
+          script: docker build -t jfeudeline/codenames-ui:latest . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-ui:latest
           on:
             branch: master
         - provider: script
           skip_cleanup: true
-          script:
-            docker build -t inseefrlab/onyxia-ui$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      && docker push jfeudeline/codenames-ui$TRAVIS_TAG
+          script: docker build -t jfeudeline/codenames-ui$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-ui$TRAVIS_TAG
           on:
             branch: master
