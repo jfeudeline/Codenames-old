@@ -11,6 +11,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "reason-react": "0.8.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "socketio": "^1.0.0"
@@ -20,7 +21,9 @@
     "start-local-api": "REACT_APP_BASE_API_URL=http://localhost:5000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "re:build": "bsb -make-world -clean-world",
+    "re:watch": "bsb -make-world -clean-world -w"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "bs-platform": "7.3.2"
   }
 }

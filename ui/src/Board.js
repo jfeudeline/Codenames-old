@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 
 import io from "socket.io-client";
 
@@ -14,6 +15,18 @@ const Board = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("passage dans useEffect");
+
+    console.log(socket);
+
+    socket.open();
+
+    socket.on("connect", (content) =>
+      console.log(`connect to server : ${content}`)
+    );
+
+    console.log(socket);
+
     socket.on("update", (cards) => {
       console.log("update cards");
       setCards(cards);
@@ -22,11 +35,10 @@ const Board = () => {
 
     socket.emit("update");
 
-    socket.on("connect", (content) =>
-      console.log(`connect to server : ${content}`)
-    );
-
-    return () => socket.close();
+    return () => {
+      socket.close();
+      console.log("déconnexion au serveur");
+    };
   }, []);
 
   const changeSpymaster = (e) => {
@@ -51,11 +63,13 @@ const Board = () => {
     }
   };
 
-  if (loading) return <div>cards Loading...</div>;
-
   return (
     <>
-      <Deck cards={cards} isSpymaster={isSpymaster} onClick={handleClick} />
+      {loading ? (
+        <div>cards Loading...</div>
+      ) : (
+        <Deck cards={cards} isSpymaster={isSpymaster} onClick={handleClick} />
+      )}
 
       <div>
         Spymaster :
@@ -63,6 +77,16 @@ const Board = () => {
       </div>
       <div>
         <button onClick={changeCards}>Nouvelle Partie</button>
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            ReasonReactRouter.push("/");
+          }}
+        >
+          Retour à l'accueil
+        </button>
       </div>
     </>
   );
