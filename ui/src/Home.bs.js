@@ -5,7 +5,7 @@ import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 
 function Home(Props) {
   return React.createElement("div", undefined, React.createElement("h2", undefined, "Ceci est la page d'accueil"), React.createElement("button", {
-                  onClick: (function ($$event) {
+                  onClick: (function (param) {
                       return ReasonReactRouter.push("/game");
                     })
                 }, "Afficher le jeu"));

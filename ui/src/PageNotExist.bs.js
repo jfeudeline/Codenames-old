@@ -5,7 +5,7 @@ import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 
 function PageNotExist(Props) {
   return React.createElement("div", undefined, React.createElement("h2", undefined, "La page demandée n\'existe pas"), React.createElement("button", {
-                  onClick: (function ($$event) {
+                  onClick: (function (param) {
                       return ReasonReactRouter.push("/");
                     })
                 }, "Retour à l\'accueil"));
