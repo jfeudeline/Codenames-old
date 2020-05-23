@@ -17,8 +17,13 @@ app.config['SECRET_KEY'] = 'secret!'
 socket = SocketIO(app, cors_allowed_origins='*')
 
 
-@app.route('/api')
+@app.route('/')
 def index():
+    return "Bienvenue sur Codenames"
+
+
+@app.route('/api')
+def api():
     return games.games
 
 
