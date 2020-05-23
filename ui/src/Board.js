@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 
 import Deck from "./components";
