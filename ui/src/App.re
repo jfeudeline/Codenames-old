@@ -1,6 +1,6 @@
 module Board = {
   [@bs.module "./Board"] [@react.component]
-  external make: unit => React.element = "default";
+  external make: (~gameName: string) => React.element = "default";
 };
 
 [@react.component]
@@ -10,7 +10,7 @@ let make = () => {
   let pageToGo =
     switch (url.path) {
     | [] => <Home />
-    | ["game"] => <Board />
+    | [game] => <> <Board gameName=game /> </>
     | _ => <PageNotExist />
     };
 

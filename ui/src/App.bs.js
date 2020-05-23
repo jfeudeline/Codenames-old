@@ -16,9 +16,9 @@ function App(Props) {
   var url = ReasonReactRouter.useUrl(undefined, undefined);
   var match = url.path;
   var pageToGo = match ? (
-      match[0] === "game" ? (
-          match[1] ? React.createElement(PageNotExist$Ui.make, { }) : React.createElement(make, { })
-        ) : React.createElement(PageNotExist$Ui.make, { })
+      match[1] ? React.createElement(PageNotExist$Ui.make, { }) : React.createElement(React.Fragment, undefined, React.createElement(make, {
+                  gameName: match[0]
+                }))
     ) : React.createElement(Home$Ui.make, { });
   return React.createElement("div", undefined, React.createElement("nav", undefined, React.createElement("h1", undefined, "Codenames")), pageToGo);
 }
