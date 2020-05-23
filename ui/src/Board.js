@@ -1,33 +1,36 @@
 import React, { useState, useEffect } from "react";
-
-import io from "socket.io-client";
+import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 
 import Deck from "./components";
 
+import io from "socket.io-client";
 const url = window._env_.BASE_API_URL || process.env.REACT_APP_BASE_API_URL;
-
 const socket = io(url);
 
-const Board = () => {
+const Board = ({ gameName }) => {
   const [isSpymaster, setIsSpymaster] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    socket.on("connect", (content) => {
+      console.log(`connect to server : ${content}`);
+    });
+
+    socket.emit("join", gameName);
+
     socket.on("update", (cards) => {
       console.log("update cards");
+      console.log(cards);
       setCards(cards);
       setLoading(false);
     });
 
-    socket.emit("update");
-
-    socket.on("connect", (content) =>
-      console.log(`connect to server : ${content}`)
-    );
-
-    return () => socket.close();
-  }, []);
+    return () => {
+      socket.emit("leave", gameName);
+      console.log("leave room");
+    };
+  }, [gameName]);
 
   const changeSpymaster = (e) => {
     e.preventDefault();
@@ -36,7 +39,7 @@ const Board = () => {
 
   const changeCards = (e) => {
     e.preventDefault();
-    socket.emit("change cards");
+    socket.emit("change cards", gameName);
   };
 
   const handleClick = (e, id) => {
@@ -47,15 +50,17 @@ const Board = () => {
       setCards(cards);
       console.log("clic");
 
-      socket.emit("choose word", id);
+      socket.emit("choose word", gameName, id);
     }
   };
 
-  if (loading) return <div>cards Loading...</div>;
-
   return (
     <>
-      <Deck cards={cards} isSpymaster={isSpymaster} onClick={handleClick} />
+      {loading ? (
+        <div>cards Loading...</div>
+      ) : (
+        <Deck cards={cards} isSpymaster={isSpymaster} onClick={handleClick} />
+      )}
 
       <div>
         Spymaster :
@@ -63,6 +68,16 @@ const Board = () => {
       </div>
       <div>
         <button onClick={changeCards}>Nouvelle Partie</button>
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            ReasonReactRouter.push("/");
+          }}
+        >
+          Retour à l'accueil
+        </button>
       </div>
     </>
   );
