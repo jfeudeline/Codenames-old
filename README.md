@@ -1,9 +1,6 @@
 # Codenames :
 
-https://jfeudeline-codenames.herokuapp.com/
-
 - Version en ligne du jeu Codenames en cours de développement.
-- Le serveur ne gère qu'une unique partie multijoueur simultanée
 
 ### Installation de l'environement de développement (Linux)
 
@@ -11,10 +8,9 @@ https://jfeudeline-codenames.herokuapp.com/
 
 ```bash
 cd Codenames/api
-python3.7 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
-pip install --upgrade setuptools
 pip install -r requirements.txt
 python codenames.py
 ```
@@ -24,7 +20,14 @@ python codenames.py
 ```bash
 cd Codenames/ui
 yarn
-yarn start
+yarn start-local-api
 ```
 
-Modifier l'URL dans Board.js pour choisir entre le serveur local ou distant.
+### Instalation locale via docker
+
+#### API
+docker run --publish 8000:8000 --rm jfeudeline/codenames-api:latest
+
+#### UI
+docker run --publish 8080:80 --rm --env REACT_APP_BASE_API_URL=http://localhost:8000 jfeudeline/codenames-ui:latest
+
