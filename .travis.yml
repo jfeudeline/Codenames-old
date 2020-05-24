@@ -19,8 +19,7 @@ jobs:
             branch: master
         - provider: script
           skip_cleanup: true
-          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-api:latest registry.heroku.com/powerful-scrubland-30965/web && docker push registry.heroku.com/powerful-scrubland-30965/web
-          script: curl --netrc -X PATCH https://api.heroku.com/apps/powerful-scrubland-30965/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-api:latest"}]} -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
+          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-api:latest registry.heroku.com/powerful-scrubland-30965/web && docker push registry.heroku.com/powerful-scrubland-30965/web #&& curl --netrc -X PATCH https://api.heroku.com/apps/powerful-scrubland-30965/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-api:latest"}]}' -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
           on:
             branch: master
 
@@ -44,7 +43,6 @@ jobs:
             branch: master
         - provider: script
           skip_cleanup: true
-          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-ui:latest registry.heroku.com/jfeudeline-codenames/web && docker push registry.heroku.com/jfeudeline-codenames/web
-          script: curl --netrc -X PATCH https://api.heroku.com/apps/jfeudeline-codenames/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-ui:latest"}]} -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
+          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-ui:latest registry.heroku.com/jfeudeline-codenames/web && docker push registry.heroku.com/jfeudeline-codenames/web #&& curl --netrc -X PATCH https://api.heroku.com/apps/jfeudeline-codenames/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-ui:latest"}]}' -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
           on:
             branch: master
