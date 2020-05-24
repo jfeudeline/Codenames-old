@@ -6,8 +6,6 @@ import eventlet
 from games import Games
 
 games = Games()
-games.set_new_game("a")
-games.set_new_game("b")
 
 
 app = Flask(__name__)
