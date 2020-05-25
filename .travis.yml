@@ -17,11 +17,6 @@ jobs:
           script: docker build -t jfeudeline/codenames-api$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-api$TRAVIS_TAG
           on:
             branch: master
-        - provider: script
-          skip_cleanup: true
-          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-api:latest registry.heroku.com/powerful-scrubland-30965/web && docker push registry.heroku.com/powerful-scrubland-30965/web #&& curl --netrc -X PATCH https://api.heroku.com/apps/powerful-scrubland-30965/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-api:latest"}]}' -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
-          on:
-            branch: master
 
     - language: node_js
       node_js: 13
@@ -29,7 +24,6 @@ jobs:
         - cd ui
       script:
         - yarn build
-
       deploy:
         - provider: script
           skip_cleanup: true
@@ -39,10 +33,5 @@ jobs:
         - provider: script
           skip_cleanup: true
           script: docker build -t jfeudeline/codenames-ui$TRAVIS_TAG . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker push jfeudeline/codenames-ui$TRAVIS_TAG
-          on:
-            branch: master
-        - provider: script
-          skip_cleanup: true
-          script: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com && docker tag jfeudeline/codenames-ui:latest registry.heroku.com/jfeudeline-codenames/web && docker push registry.heroku.com/jfeudeline-codenames/web #&& curl --netrc -X PATCH https://api.heroku.com/apps/jfeudeline-codenames/formation -d '{"updates": [{"type": "web", "docker_image": "jfeudeline/codenames-ui:latest"}]}' -H "Content-Type: application/json" -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
           on:
             branch: master
